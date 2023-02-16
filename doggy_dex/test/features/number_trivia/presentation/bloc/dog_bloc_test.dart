@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dog_dex/core/error/failures.dart';
-import 'package:dog_dex/core/usecases/usecase.dart';
-import 'package:dog_dex/core/util/input_converter.dart';
-import 'package:dog_dex/features/dog/domain/entities/dog.dart';
-import 'package:dog_dex/features/dog/domain/usecases/get_concrete_dog.dart';
-import 'package:dog_dex/features/dog/domain/usecases/get_random_dog.dart';
-import 'package:dog_dex/features/dog/presentation/bloc/bloc.dart';
+import 'package:doggydex/core/error/failures.dart';
+import 'package:doggydex/core/usecases/usecase.dart';
+import 'package:doggydex/core/util/input_converter.dart';
+import 'package:doggydex/features/dog/domain/entities/dog.dart';
+import 'package:doggydex/features/dog/domain/usecases/get_concrete_dog.dart';
+import 'package:doggydex/features/dog/domain/usecases/get_random_dog.dart';
+import 'package:doggydex/features/dog/presentation/bloc/bloc.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 

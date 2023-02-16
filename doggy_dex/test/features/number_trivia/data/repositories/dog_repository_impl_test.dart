@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:dog_dex/core/error/exceptions.dart';
-import 'package:dog_dex/core/error/failures.dart';
-import 'package:dog_dex/core/network/network_info.dart';
-import 'package:dog_dex/features/dog/data/datasources/dog_local_data_source.dart';
-import 'package:dog_dex/features/dog/data/datasources/dog_remote_data_source.dart';
-import 'package:dog_dex/features/dog/data/repositories/dog_repository_impl.dart';
-import 'package:dog_dex/features/dog/data/models/dog_model.dart';
-import 'package:dog_dex/features/dog/domain/entities/dog.dart';
+import 'package:doggydex/core/error/exceptions.dart';
+import 'package:doggydex/core/error/failures.dart';
+import 'package:doggydex/core/network/network_info.dart';
+import 'package:doggydex/features/dog/data/datasources/dog_local_data_source.dart';
+import 'package:doggydex/features/dog/data/datasources/dog_remote_data_source.dart';
+import 'package:doggydex/features/dog/data/repositories/dog_repository_impl.dart';
+import 'package:doggydex/features/dog/data/models/dog_model.dart';
+import 'package:doggydex/features/dog/domain/entities/dog.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 

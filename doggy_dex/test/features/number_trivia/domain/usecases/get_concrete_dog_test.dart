@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dog_dex/features/dog/domain/entities/dog.dart';
-import 'package:dog_dex/features/dog/domain/repositories/dog_repository.dart';
-import 'package:dog_dex/features/dog/domain/usecases/get_concrete_dog.dart';
+import 'package:doggydex/features/dog/domain/entities/dog.dart';
+import 'package:doggydex/features/dog/domain/repositories/dog_repository.dart';
+import 'package:doggydex/features/dog/domain/usecases/get_concrete_dog.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 

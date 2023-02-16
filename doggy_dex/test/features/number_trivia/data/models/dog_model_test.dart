@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:dog_dex/features/dog/data/models/dog_model.dart';
-import 'package:dog_dex/features/dog/domain/entities/dog.dart';
+import 'package:doggydex/features/dog/data/models/dog_model.dart';
+import 'package:doggydex/features/dog/domain/entities/dog.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tDogModel = const DogModel(number: 1, text: 'Test Text');
+  const tDogModel = DogModel(number: 1, text: 'Test Text');
 
   test(
     'should be a subclass of Dog entity',

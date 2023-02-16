@@ -1,7 +1,7 @@
-import 'package:dog_dex/core/error/exceptions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/error/exceptions.dart';
 import '../../../../injection_container.dart';
 import '../bloc/bloc.dart';
 import '../widgets/dog_controls.dart';

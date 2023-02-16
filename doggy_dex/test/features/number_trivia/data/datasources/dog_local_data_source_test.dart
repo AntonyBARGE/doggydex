@@ -1,8 +1,7 @@
 import 'dart:convert';
-
-import 'package:dog_dex/core/error/exceptions.dart';
-import 'package:dog_dex/features/dog/data/datasources/dog_local_data_source.dart';
-import 'package:dog_dex/features/dog/data/models/dog_model.dart';
+import 'package:doggydex/core/error/exceptions.dart';
+import 'package:doggydex/features/dog/data/datasources/dog_local_data_source.dart';
+import 'package:doggydex/features/dog/data/models/dog_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

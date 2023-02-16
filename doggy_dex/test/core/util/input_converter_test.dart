@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dog_dex/core/util/input_converter.dart';
+import 'package:doggydex/core/util/input_converter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
