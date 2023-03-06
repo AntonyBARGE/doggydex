@@ -24,7 +24,7 @@ void main() {
     'should get trivia for the number from the repository',
     () async {
       // arrange
-      when(mockDogRepository.getConcreteDog(anything as int))
+      when(mockDogRepository.getConcreteDog(tNumber))
           .thenAnswer((_) async => const Right(tDog));
       // act
       final result = await usecase(const Params(number: tNumber));

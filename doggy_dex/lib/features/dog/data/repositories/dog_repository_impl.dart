@@ -27,7 +27,7 @@ class DogRepositoryImpl implements DogRepository {
     int number,
   ) async {
     return await _getDog(() {
-      return remoteDataSource.getConcreteDog(number);
+      return remoteDataSource.getConcreteDog(number)!;
     });
   }
 
@@ -50,7 +50,7 @@ class DogRepositoryImpl implements DogRepository {
     } else {
       try {
         final localDog = await localDataSource.getLastDog();
-        return Right(localDog);
+        return Right(localDog!);
       } on CacheException {
         return Left(CacheFailure());
       }

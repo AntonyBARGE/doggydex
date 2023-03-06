@@ -1,27 +1,21 @@
+import '../bloc/dog_bloc.dart';
+import '../widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/error/exceptions.dart';
 import '../../../../injection_container.dart';
-import '../bloc/bloc.dart';
-import '../widgets/dog_controls.dart';
-import '../widgets/dog_display.dart';
-import '../widgets/loading_widget.dart';
-import '../widgets/message_display.dart';
 
 class DogPage extends StatelessWidget {
-  const DogPage({super.key});
+  const DogPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Number Trivia'),
-      ),
-      body: SingleChildScrollView(
-        child: buildBody(context),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Dog'),
+        ),
+        body: SingleChildScrollView(
+          child: buildBody(context)));
   }
 
   BlocProvider<DogBloc> buildBody(BuildContext context) {
@@ -29,33 +23,29 @@ class DogPage extends StatelessWidget {
       create: (_) => sl<DogBloc>(),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           child: Column(
-            children: <Widget>[
+            children: [
               const SizedBox(height: 10),
-              // Top half
               BlocBuilder<DogBloc, DogState>(
                 builder: (context, state) {
                   if (state is Empty) {
-                    return const MessageDisplay(
-                      message: 'Start searching!',
-                    );
+                    return const MessageDisplay(message: 'Start searching');
                   } else if (state is Loading) {
                     return const LoadingWidget();
                   } else if (state is Loaded) {
-                    return DogDisplay(dog: state.trivia);
+                    return DogDisplay(dog: state.dog);
                   } else if (state is Error) {
-                    return MessageDisplay(
-                      message: state.message,
-                    );
-                  } else {
-                    throw CacheException();
+                    return MessageDisplay(message: state.message);
                   }
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height / 3,
+                    child: const Placeholder(),
+                  );
                 },
               ),
               const SizedBox(height: 20),
-              // Bottom half
-              const DogControls()
+              const DogControls(),
             ],
           ),
         ),
@@ -63,3 +53,4 @@ class DogPage extends StatelessWidget {
     );
   }
 }
+

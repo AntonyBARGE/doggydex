@@ -13,7 +13,7 @@ dependencies:
   # Service locator
   get_it: ^7.2.0
   # Bloc for state management
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^8.1.1
   # Value equality
   equatable: ^2.0.5
   # Functional programming thingies
@@ -23,9 +23,7 @@ dependencies:
   # Http requests
   http: ^0.13.5
   # Local cache
-  shared_preferences: ^0.5.3+4
-  # Testing help
-  mocktail: ^0.3.0
+  shared_preferences: ^2.0.5
 
 
   flutter:
@@ -37,6 +35,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.3.2
+  build_runner: ^2.3.3
 
   flutter_lints: ^2.0.0
 

@@ -1,7 +1,6 @@
-import 'dart:async';
-
+import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
@@ -9,7 +8,9 @@ import '../../../../core/util/input_converter.dart';
 import '../../domain/entities/dog.dart';
 import '../../domain/usecases/get_concrete_dog.dart';
 import '../../domain/usecases/get_random_dog.dart';
-import 'bloc.dart';
+
+part 'dog_event.dart';
+part 'dog_state.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
@@ -21,60 +22,48 @@ class DogBloc extends Bloc<DogEvent, DogState> {
   final GetRandomDog getRandomDog;
   final InputConverter inputConverter;
 
-  @override
   DogState get initialState => Empty();
 
   DogBloc({
-    required GetConcreteDog concrete,
-    required GetRandomDog random,
+    required this.getConcreteDog,
+    required this.getRandomDog,
     required this.inputConverter,
-  })  : getConcreteDog = concrete,
-        getRandomDog = random, super(Empty());
-
-
-  @override
-  Stream<DogState> mapEventToState(
-    DogEvent event,
-  ) async* {
-    if (event is GetConcreteDogEvent) {
+  }) : super(Empty()) {
+    on<GetConcreteDogEvent>((event, emit) async {
       final inputEither =
           inputConverter.stringToUnsignedInteger(event.numberString);
-
-      yield* inputEither.fold(
-        (failure) async* {
-          yield Error(message: INVALID_INPUT_FAILURE_MESSAGE);
-        },
-        (integer) async* {
-          yield Loading();
-          final failureOrDog =
-              await getConcreteDog(Params(number: integer));
-          yield* _eitherLoadedOrErrorState(failureOrDog);
-        },
-      );
-    } else if (event is GetRandomDogEvent) {
-      yield Loading();
-      final failureOrDog = await getRandomDog(NoParams());
-      yield* _eitherLoadedOrErrorState(failureOrDog);
-    }
+      inputEither.fold((failure) {
+        emit(const Error(message: INVALID_INPUT_FAILURE_MESSAGE));
+      }, (integer) async {
+        emit(Loading());
+        final failureOrTrivia =
+            await getConcreteDog(Params(number: integer));
+        failureOrTrivia!.fold((failure) {
+          emit(Error(message: _mapFailureToMessage(failure)));
+        }, (dog) {
+          emit(Loaded(dog: dog));
+        });
+      });
+    });
+    on<GetRandomDogEvent>((event, emit) async {
+      emit(Loading());
+      final failureOrTrivia = await getRandomDog(NoParams());
+      failureOrTrivia!.fold((failure) {
+        emit(Error(message: _mapFailureToMessage(failure)));
+      }, (dog) {
+        emit(Loaded(dog: dog));
+      });
+    });
   }
+}
 
-  Stream<DogState> _eitherLoadedOrErrorState(
-    Either<Failure, Dog> failureOrDog,
-  ) async* {
-    yield failureOrDog.fold(
-      (failure) => Error(message: _mapFailureToMessage(failure)),
-      (trivia) => Loaded(trivia: trivia),
-    );
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure:
-        return SERVER_FAILURE_MESSAGE;
-      case CacheFailure:
-        return CACHE_FAILURE_MESSAGE;
-      default:
-        return 'Unexpected error';
-    }
+String _mapFailureToMessage(Failure failure) {
+  switch (failure.runtimeType) {
+    case ServerFailure:
+      return SERVER_FAILURE_MESSAGE;
+    case CacheFailure:
+      return CACHE_FAILURE_MESSAGE;
+    default:
+      return 'Unexpected error';
   }
 }

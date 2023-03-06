@@ -1,6 +1,8 @@
-import 'package:equatable/equatable.dart';
+part of 'dog_bloc.dart';
 
 abstract class DogEvent extends Equatable {
+  const DogEvent();
+
   @override
   List<Object> get props => [];
 }
@@ -8,10 +10,7 @@ abstract class DogEvent extends Equatable {
 class GetConcreteDogEvent extends DogEvent {
   final String numberString;
 
-  GetConcreteDogEvent(this.numberString);
-
-  @override
-  List<Object> get props => [numberString];
+  const GetConcreteDogEvent(this.numberString);
 }
 
 class GetRandomDogEvent extends DogEvent {}

@@ -11,7 +11,7 @@ class GetRandomDog implements UseCase<Dog, NoParams> {
   GetRandomDog(this.repository);
 
   @override
-  Future<Either<Failure, Dog>> call(NoParams params) async {
+  Future<Either<Failure, Dog>?> call(NoParams params) async {
     return await repository.getRandomDog();
   }
 }

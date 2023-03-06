@@ -10,5 +10,5 @@ class Dog extends Equatable {
   });
 
   @override
-  List<Object> get props => [text, number];
+  List<Object?> get props => [text, number];
 }

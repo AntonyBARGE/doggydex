@@ -9,7 +9,7 @@ abstract class DogRemoteDataSource {
   /// Calls the http://numbersapi.com/{number} endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<DogModel> getConcreteDog(int number);
+  Future<DogModel>? getConcreteDog(int number);
 
   /// Calls the http://numbersapi.com/random endpoint.
   ///
@@ -23,7 +23,7 @@ class DogRemoteDataSourceImpl implements DogRemoteDataSource {
   DogRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<DogModel> getConcreteDog(int number) =>
+  Future<DogModel>? getConcreteDog(int number) =>
       _getDogFromUrl('http://numbersapi.com/$number');
 
   @override

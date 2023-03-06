@@ -12,7 +12,7 @@ class GetConcreteDog implements UseCase<Dog, Params> {
   GetConcreteDog(this.repository);
 
   @override
-  Future<Either<Failure, Dog>> call(Params params) async {
+  Future<Either<Failure, Dog>?> call(Params params) async {
     return await repository.getConcreteDog(params.number);
   }
 }
@@ -23,5 +23,5 @@ class Params extends Equatable {
   const Params({required this.number});
 
   @override
-  List<Object> get props => [number];
+  List<Object?> get props => [number];
 }

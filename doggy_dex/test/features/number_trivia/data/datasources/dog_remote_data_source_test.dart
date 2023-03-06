@@ -20,18 +20,19 @@ void main() {
     dataSource = DogRemoteDataSourceImpl(client: mockHttpClient);
   });
 
-  void setUpMockHttpClientSuccess200() {
-    when(mockHttpClient.get(anything as Uri))
+  void setUpMockHttpClientSuccess200(Uri url) {
+    when(mockHttpClient.get(url, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(fixture('trivia.json'), 200));
   }
 
-  void setUpMockHttpClientFailure404() {
-    when(mockHttpClient.get(anything as Uri))
+  void setUpMockHttpClientFailure404(Uri url) {
+    when(mockHttpClient.get(url, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response('Something went wrong', 404));
   }
 
   group('getConcreteDog', () {
     const tNumber = 1;
+    Uri uri = Uri.parse('http://numbersapi.com/$tNumber');
     final tDogModel =
         DogModel.fromJson(json.decode(fixture('trivia.json')));
 
@@ -40,12 +41,12 @@ void main() {
        being the endpoint and with application/json header''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200(uri);
         // act
         dataSource.getConcreteDog(tNumber);
         // assert
         verify(mockHttpClient.get(
-          Uri.parse('http://numbersapi.com/$tNumber'),
+          uri,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -57,7 +58,7 @@ void main() {
       'should return Dog when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200(uri);
         // act
         final result = await dataSource.getConcreteDog(tNumber);
         // assert
@@ -69,7 +70,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setUpMockHttpClientFailure404(uri);
         // act
         final call = dataSource.getConcreteDog;
         // assert
@@ -79,6 +80,7 @@ void main() {
   });
 
   group('getRandomDog', () {
+    Uri randomUri = Uri.parse('http://numbersapi.com/random');
     final tDogModel =
         DogModel.fromJson(json.decode(fixture('trivia.json')));
 
@@ -87,12 +89,12 @@ void main() {
        being the endpoint and with application/json header''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200(randomUri);
         // act
         dataSource.getRandomDog();
         // assert
         verify(mockHttpClient.get(
-          Uri.parse('http://numbersapi.com/random'),
+          randomUri,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -104,7 +106,7 @@ void main() {
       'should return Dog when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200(randomUri);
         // act
         final result = await dataSource.getRandomDog();
         // assert
@@ -116,7 +118,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setUpMockHttpClientFailure404(randomUri);
         // act
         final call = dataSource.getRandomDog;
         // assert

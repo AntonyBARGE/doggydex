@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Number Trivia',
+      title: 'Doggydex',
       theme: ThemeData(
         primaryColor: Colors.green.shade800, 
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.green.shade600),

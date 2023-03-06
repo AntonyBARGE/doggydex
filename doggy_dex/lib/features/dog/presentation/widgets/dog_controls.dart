@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/src/provider.dart';
 
 import '../bloc/dog_bloc.dart';
-import '../bloc/dog_event.dart';
 
 class DogControls extends StatefulWidget {
   const DogControls({
@@ -10,7 +9,7 @@ class DogControls extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DogControlsState createState() => _DogControlsState();
+  State<DogControls> createState() => _DogControlsState();
 }
 
 class _DogControlsState extends State<DogControls> {
@@ -20,7 +19,7 @@ class _DogControlsState extends State<DogControls> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         TextField(
           controller: controller,
           keyboardType: TextInputType.number,
@@ -31,24 +30,27 @@ class _DogControlsState extends State<DogControls> {
           onChanged: (value) {
             inputStr = value;
           },
-          onSubmitted: (_) {
-            dispatchConcrete();
+          onSubmitted:  (_) {
+            addConcrete();
           },
         ),
         const SizedBox(height: 10),
         Row(
-          children: <Widget>[
+          children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: dispatchConcrete,
+                onPressed: addConcrete,
                 child: const Text('Search'),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
-                onPressed: dispatchRandom,
-                child: const Text('Get random dog'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey.shade500,
+                ),
+                onPressed: addRandom,
+                child: const Text('Get random trivia'),
               ),
             ),
           ],
@@ -57,14 +59,13 @@ class _DogControlsState extends State<DogControls> {
     );
   }
 
-  void dispatchConcrete() {
+  void addConcrete() {
     controller.clear();
-    BlocProvider.of<DogBloc>(context)
-        .add(GetConcreteDogEvent(inputStr));
+    context.read<DogBloc>().add(GetConcreteDogEvent(inputStr));
   }
 
-  void dispatchRandom() {
+  void addRandom() {
     controller.clear();
-    BlocProvider.of<DogBloc>(context).add(GetRandomDogEvent());
+    context.read<DogBloc>().add(GetRandomDogEvent());
   }
 }

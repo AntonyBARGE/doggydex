@@ -10,9 +10,9 @@ abstract class DogLocalDataSource {
   /// the user had an internet connection.
   ///
   /// Throws [CacheException] if no cached data is present.
-  Future<DogModel> getLastDog();
+  Future<DogModel>? getLastDog();
 
-  Future<void> cacheDog(DogModel dogToCache);
+  Future<void>? cacheDog(DogModel dogToCache);
 }
 
 const CACHED_DOG = 'CACHED_DOG';
@@ -23,7 +23,7 @@ class DogLocalDataSourceImpl implements DogLocalDataSource {
   DogLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<DogModel> getLastDog() {
+  Future<DogModel>? getLastDog() {
     final jsonString = sharedPreferences.getString(CACHED_DOG);
     if (jsonString != null) {
       return Future.value(DogModel.fromJson(json.decode(jsonString)));
@@ -33,7 +33,7 @@ class DogLocalDataSourceImpl implements DogLocalDataSource {
   }
 
   @override
-  Future<void> cacheDog(DogModel dogToCache) {
+  Future<void>? cacheDog(DogModel dogToCache) {
     return sharedPreferences.setString(
       CACHED_DOG,
       json.encode(dogToCache.toJson()),
